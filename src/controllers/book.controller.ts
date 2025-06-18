@@ -16,7 +16,6 @@ export default class BookController {
     async create(request: Request, response: Response, next: NextFunction) {
         try {
             const body = request.body;
-            console.log("body",body)
             const author: Author = body.author;
 
             const validAuthor: Author = await this.authorService.findByName(author.name) || await this.authorService.create(author.name);
@@ -86,8 +85,6 @@ export default class BookController {
         try {
             const id = new Types.ObjectId(request.params.id);
             const body = request.body;
-            console.log("body",body)
-            console.log("body.qty",body.qty)
             const qty_number = Number(body.qty);
             const updatedBook = await this.bookService.update(id, body.title, body.isbn,qty_number,body.author);
 
