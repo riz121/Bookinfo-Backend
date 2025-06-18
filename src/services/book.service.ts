@@ -87,7 +87,7 @@ export default class BookService {
                 {
                     title: title,
                     isbn: isbn,
-                    qty
+                    qty:qty
                 },
                 {
                     returnDocument: 'after'
