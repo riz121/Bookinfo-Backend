@@ -13,9 +13,19 @@ import morganMiddleware from "./middleware/morgan.middleware";
 
 //const allowedOrigins = ['/http:\/\/localhost(:\d{1,5})?/'];
 
+const allowedOrigins = [
+  /^http:\/\/localhost(:\d{1,5})?$/, // Allow localhost
+  'https://bookinfo-backend.onrender.com', // Allow your deployed backend
+];
+
 const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
-    if (!origin || /^http:\/\/localhost(:\d{1,5})?$/.test(origin)) {
+    if (
+      !origin ||
+      allowedOrigins.some((allowed) =>
+        typeof allowed === 'string' ? allowed === origin : allowed.test(origin)
+      )
+    ) {
       callback(null, true); // allow
     } else {
       callback(new Error('Not allowed by CORS')); // reject
@@ -23,6 +33,7 @@ const corsOptions: cors.CorsOptions = {
   },
   credentials: true,
 };
+
 export default class App {
   private app: Application;
   private port: Number;
