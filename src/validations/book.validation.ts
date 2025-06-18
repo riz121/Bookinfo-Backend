@@ -12,7 +12,9 @@ const create = Joi.object({
 });
 
 const update = Joi.alternatives().try(
-    Joi.object({ title: Joi.string() }),
+    Joi.object({ title: Joi.string(),isbn: Joi.string() ,qty: Joi.string() , author: Joi.object({
+        name: Joi.string().max(100).required()
+    }).required()}),
     Joi.object({ isbn: Joi.string()}),
     Joi.object({ qty: Joi.string()}),
     Joi.object({
