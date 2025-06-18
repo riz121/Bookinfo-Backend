@@ -86,8 +86,10 @@ export default class BookController {
         try {
             const id = new Types.ObjectId(request.params.id);
             const body = request.body;
-
-            const updatedBook = await this.bookService.update(id, body.title, body.isbn, body.qty,body.author);
+            console.log("body",body)
+            console.log("body.qty",body.qty)
+            const qty_number = Number(body.qty);
+            const updatedBook = await this.bookService.update(id, body.title, body.isbn,qty_number,body.author);
 
             response.status(200).json(updatedBook);
         } catch (error) {
