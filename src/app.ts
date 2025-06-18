@@ -12,27 +12,28 @@ import morganMiddleware from "./middleware/morgan.middleware";
 
 
 //const allowedOrigins = ['/http:\/\/localhost(:\d{1,5})?/'];
-
-const allowedOrigins = [
-  /^http:\/\/localhost(:\d{1,5})?$/, // Allow localhost
-  'https://bookinfo-backend.onrender.com', // Allow your deployed backend
-];
-
 const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
+    console.log('Incoming Origin:', origin); // <- Add this
+    const allowedOrigins = [
+      /^http:\/\/localhost(:\d{1,5})?$/,
+      'https://bookinfo-frontend.onrender.com', // <-- Your frontend's Render domain
+    ];
+
     if (
       !origin ||
       allowedOrigins.some((allowed) =>
         typeof allowed === 'string' ? allowed === origin : allowed.test(origin)
       )
     ) {
-      callback(null, true); // allow
+      callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS')); // reject
+      callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
 };
+
 
 export default class App {
   private app: Application;
